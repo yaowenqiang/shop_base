@@ -3,4 +3,15 @@ name = "shop_base"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "shop_cli"
+path = "src/cli.rs"
+
+[lib]
+name = "shop_db"
+path = "src/lib.rs"
+
 [dependencies]
+diesel = { version = "2.3.3", features = ["postgres"] }
+dotenv = "0.15.0"
+failure = "0.1.8"
