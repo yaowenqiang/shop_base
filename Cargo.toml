@@ -12,6 +12,7 @@ name = "shop_db"
 path = "src/lib.rs"
 
 [dependencies]
+clap = { version = "4.5.53", features = ["derive"] }
 diesel = { version = "2.3.3", features = ["postgres"] }
 dotenv = "0.15.0"
 failure = "0.1.8"

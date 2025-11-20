@@ -36,6 +36,16 @@ impl Conn {
             .get_result::<Item>(&mut self.0)
             .map_err(|x| x.into())
     }
+
+    pub fn find_item(&mut self, name: &str, limit: i64) -> Result<Vec<Item>, Error> {
+        let lname = format!("%{}%", name);
+        items::table
+            .filter(items::name.ilike(lname))
+            .order(items::id.desc())
+            .limit(limit)
+            .load(&mut self.0)
+            .map_err(|e| e.into())
+    }
 }
 #[cfg(test)]
 mod tests {
