@@ -46,6 +46,17 @@ impl Conn {
             .load(&mut self.0)
             .map_err(|e| e.into())
     }
+
+    pub fn set_stock(&mut self, id: i32, mut n: i32, rel: bool) -> Result<Item, Error> {
+        if rel {
+            let items: Vec<Item> = items::table.find(id).for_update().load(&mut self.0)?;
+            n += items[0].instock;
+        }
+        diesel::update(items::table::find(items::table, id))
+            .set(items::instock.eq(n))
+            .get_result(&mut self.0)
+            .map_err(|e| e.into())
+    }
 }
 #[cfg(test)]
 mod tests {

@@ -34,6 +34,15 @@ enum Commands {
         #[arg(short, long, default_value = "5")]
         limit: i64,
     },
+    /// Se the stock level for an item in the store
+    Stock {
+        #[arg(short, long)]
+        id: i32,
+        #[arg(short, long)]
+        amount: i32,
+        #[arg(short, long)]
+        rel: bool,
+    },
 }
 
 fn main() -> Result<(), Error> {
@@ -56,6 +65,14 @@ fn main() -> Result<(), Error> {
                 println!("\n---------Entry---------\n");
                 println!("{:?}", p);
             }
+        }
+        Commands::Stock {
+            id,
+            mut amount,
+            rel,
+        } => {
+            let r = conn.set_stock(id, amount, rel)?;
+            println!("{:?}", r);
         }
     }
     Ok(())
